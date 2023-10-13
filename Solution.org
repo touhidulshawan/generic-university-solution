@@ -1,0 +1,180 @@
+#+TITLE: Generic University from [[https://github.com/InsiderPhD/Generic-University][InsiderPhd]]
+#+AUTHOR: [[https://github.com/touhidulshawan][Touhidul Shawan]]
+#+DESCRIPTION: Solution of Generic University lab from InsiderPhd 
+#+DATE: 2023-10-13 Fri
+#+OPTIONS: toc:2
+
+* Table of Contents :toc:
+- [[#goals-615][Goals]]
+- [[#find-the-emails-of-the-administrator][Find the emails of the administrator]]
+- [[#brute-force-the-api-to-find-new-endpoints][Brute force the API to find new endpoints]]
+- [[#find-out-what-grades-everyone-got-in-a-class][Find out what grades everyone got in a class]]
+- [[#edit-someones-grade][Edit someone's grade]]
+- [[#make-an-account][Make an account]]
+- [[#access-the-graphql-api][Access the GraphQL API]]
+- [[#change-another-accounts-password][Change another account's password]]
+- [[#login-to-your-account][Login to your account]]
+- [[#access-admin-api][Access admin API]]
+- [[#find-out-what-vulnerabilities-the-it-admins-have-ignored][Find out what vulnerabilities the IT admins have ignored]]
+- [[#make-your-account-an-admin][Make your account an admin]]
+- [[#access-the-admin-control-panel][Access the admin control panel]]
+- [[#fire-a-blind-xss-in-the-admin-control-panel-and-validate-with-your-new-admin-account][Fire a blind XSS in the admin control panel and validate with your new admin account]]
+- [[#delete-everything][Delete everything]]
+- [[#restore-everything][Restore everything]]
+
+* Goals [6/15]
+- [X] Find the emails of the administrator
+- [X] Brute force the API to find new endpoints
+- [X] Find out what grades everyone got in a class
+- [ ] Edit someone's grade
+- [X] Make an account
+- [X] Access the GraphQL API
+- [ ] Change another account's password
+- [X] Login to your account
+- [ ] Access admin API
+- [ ] Find out what vulnerabilities the IT admins have ignored
+- [ ] Make your account an admin
+- [ ] Access the admin control panel
+- [ ] Fire a blind XSS in the admin control panel and validate with your new admin account
+- [ ] Delete everything
+- [ ] Restore everything
+
+* DONE Find the emails of the administrator
+CLOSED: [2023-10-13 Fri 06:28]
+- Brute-force this endpoints =/api/users/1= to get users information
+- Get user id 6 with =role_id= = 1. maybe this is the admin user
+- This admin user's email: =ynitzsche@grant.com=
+* DONE Brute force the API to find new endpoints
+CLOSED: [2023-10-13 Fri 06:29]
+With custom list =/api/users/6= in this url at position =users= get two new endpoints =grades=, =classes=
+* DONE Find out what grades everyone got in a class
+CLOSED: [2023-10-13 Fri 06:56]
+- Make a =GET= request at this endpoint =/api/grades= to view all the grades everyone got in a class
+- Now access the graphql api by going this endpoint =/graphiql= and make this request to get all grades in a class
+- Request
+#+begin_src graphql
+  {
+  class(id: 1) {
+    id
+    name
+    grades {
+      id
+      grade
+      comments
+    }
+  }
+}
+#+end_src
+- Response
+#+begin_src json
+  {
+  "data": {
+    "class": [
+      {
+        "id": 1,
+        "name": "Dynamics",
+        "grades": [
+          {
+            "id": 1,
+            "grade": 74,
+            "comments": "Good job!"
+          },
+          {
+            "id": 6,
+            "grade": 40,
+            "comments": "Good job!"
+          },
+          {
+            "id": 11,
+            "grade": 39,
+            "comments": "Good job!"
+          },
+          {
+            "id": 16,
+            "grade": 51,
+            "comments": "Good job!"
+          },
+          {
+            "id": 21,
+            "grade": 25,
+            "comments": "Good job!"
+          },
+          {
+            "id": 26,
+            "grade": 37,
+            "comments": "Good job!"
+          },
+          {
+            "id": 36,
+            "grade": 69,
+            "comments": "Good job!"
+          },
+          {
+            "id": 46,
+            "grade": 64,
+            "comments": "Good job!"
+          },
+          {
+            "id": 56,
+            "grade": 13,
+            "comments": "Good job!"
+          },
+          {
+            "id": 66,
+            "grade": 69,
+            "comments": "Good job!"
+          },
+          {
+            "id": 101,
+            "grade": 65,
+            "comments": "Good job!"
+          },
+          {
+            "id": 116,
+            "grade": 53,
+            "comments": "Good job!"
+          },
+          {
+            "id": 131,
+            "grade": 43,
+            "comments": "Good job!"
+          },
+          {
+            "id": 146,
+            "grade": 78,
+            "comments": "Good job!"
+          },
+          {
+            "id": 161,
+            "grade": 48,
+            "comments": "Good job!"
+          }
+        ]
+      }
+    ]
+  }
+}
+#+end_src
+* TODO Edit someone's grade
+* DONE Make an account
+CLOSED: [2023-10-13 Fri 06:59]
+- Discover endpoint by tools like =Ffuf=
+  + /login
+  + /register
+  + /admin
+  + /home
+  + /contact
+- Now visting =/register= will give us a registration formm to create a account 
+* DONE Access the GraphQL API
+CLOSED: [2023-10-13 Fri 06:54]
+- Go to =/graphiql= endpoint to access graphql api
+* TODO Change another account's password
+* TODO Login to your account
+- Login to the account by this endpoint =/login= with previously created credentials
+* TODO Access admin API
+* TODO Find out what vulnerabilities the IT admins have ignored
+* TODO Make your account an admin
+* TODO Access the admin control panel
+* TODO Fire a blind XSS in the admin control panel and validate with your new admin account
+* TODO Delete everything
+* TODO Restore everything

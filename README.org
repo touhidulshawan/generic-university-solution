@@ -1,0 +1,7 @@
+#+TITLE: About
+#+AUTHOR: [[https://github.com/touhidulshawan][Touhidul Shawan]]
+#+DESCRIPTION: About this repository 
+#+DATE: 2023-10-13 Fri
+#+OPTIONS: toc:2
+
+This repo contains the solution walkthrough of [[https://github.com/InsiderPhD/Generic-University][Generic University]] lab lab from [[https://github.com/InsiderPhD][InsiderPhd]]
